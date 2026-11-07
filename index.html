@@ -1,7 +1,72 @@
-<!doctype html><html lang="vi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Marble Race 2D</title><link rel="stylesheet" href="style.css"></head><body>
-<section id="setup"><header><b>MARBLE RACE</b><button id="reset">RESET</button></header><main><h1>15 MARBLES</h1><p>Chọn ảnh và nhập tên. Mỗi màn có 3 marble.</p><div id="grid"></div><button id="start">START RACE ▶</button></main></section>
-<section id="race" class="hide"><header><button id="back">←</button><div><b id="round">Round 1</b><small id="roundCount">3 racers</small></div><button id="mapBtn">✎ MAP</button><button id="restart">↻</button></header><main class="raceMain"><div class="stage"><div class="stageInfo"><b id="stage">Stage 1</b><span>🔵 XANH = ĐI TIẾP　🔴 ĐỎ = RESET</span></div><div class="canvasBox"><canvas id="game" width="900" height="1200"></canvas><div id="countdown" class="overlay hide"></div><div id="message" class="message hide"></div></div></div><div id="players"></div></main></section>
-<section id="winner" class="hide winner"><div><div class="trophy">🏆</div><small>CHAMPION</small><h1 id="winnerName"></h1><button id="again">RACE AGAIN ▶</button></div></section>
-<input id="picker" type="file" accept="image/*" hidden>
-<div id="editor" class="hide editor"><div><b>MAP EDITOR</b><small>Kéo trên canvas để thêm tường</small><button id="defaultMap">DEFAULT</button><button id="clearMap">CLEAR</button><button id="doneMap">DONE</button></div></div>
-<script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script><script src="app.js"></script></body></html>
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Marble Race 2D — Elimination Tournament</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<section id="setupScreen" class="screen setup-screen">
+  <header class="topbar">
+    <div class="brand"><span class="brand-ball"></span><div><b>MARBLE RACE</b><small>15 PLAYERS · 6 STAGES</small></div></div>
+    <button id="resetPlayers" class="quiet-btn">Reset players</button>
+  </header>
+  <main class="setup-main">
+    <h1>Choose your 15 marbles</h1>
+    <p class="intro">Tap a marble to add its picture. Enter its name on the right.</p>
+    <div id="racerGrid" class="racer-grid"></div>
+    <button id="startTournament" class="start-btn">START TOURNAMENT <span>▶</span></button>
+    <p class="save-note">Your names and pictures are saved on this device.</p>
+  </main>
+</section>
+
+<section id="raceScreen" class="screen race-screen hidden">
+  <header class="race-header">
+    <button id="backToSetup" class="icon-btn" aria-label="Back">←</button>
+    <div class="stage-heading"><b id="stageName">STAGE 1 / 6</b><small id="stageSubtitle">Pinball Field</small></div>
+    <div class="race-header-right"><span id="timer">00:00</span><button id="editMap" class="quiet-btn">✎ Map</button></div>
+  </header>
+  <main class="race-main">
+    <section class="track-panel">
+      <div class="track-topline">
+        <div><b id="stageRule">15 start · 3 eliminated</b><small id="mapDescription">Dodge the bumpers and reach the finish.</small></div>
+        <div class="progress-chip"><b id="advanceCount">0 / 12</b><small>ADVANCED</small></div>
+      </div>
+      <div class="canvas-frame">
+        <canvas id="raceCanvas" width="900" height="1200"></canvas>
+        <div id="countdown" class="countdown hidden">3</div>
+        <div id="stageMessage" class="stage-message hidden"></div>
+      </div>
+      <div class="track-legend"><span><i class="legend-blue"></i> FINISH / ADVANCE</span><span><i class="legend-red"></i> RESET PORTAL</span><span><i class="legend-gold"></i> MOVING OBSTACLE</span></div>
+    </section>
+    <aside class="contestants-panel">
+      <div class="contestants-head"><b>RACERS</b><span id="remainingCount">15 remaining</span></div>
+      <div id="contestantsList" class="contestants-list"></div>
+      <div class="elimination-note" id="eliminationNote">The last 3 to finish are eliminated.</div>
+    </aside>
+  </main>
+</section>
+
+<section id="winnerScreen" class="screen winner-screen hidden">
+  <div class="winner-card">
+    <div class="winner-trophy">🏆</div>
+    <small>MARBLE RACE CHAMPION</small>
+    <div id="winnerAvatar" class="winner-avatar"></div>
+    <h1 id="winnerName">Champion</h1>
+    <p>15 racers · 6 stages · 1 winner</p>
+    <button id="raceAgain" class="start-btn">RACE AGAIN <span>↻</span></button>
+  </div>
+</section>
+
+<input id="imagePicker" type="file" accept="image/*" hidden>
+<div id="mapEditor" class="map-editor hidden">
+  <div class="editor-card">
+    <div><b>EDIT THIS MAP</b><small>Drag on an empty area to add a wall. Tap a wall to remove it.</small></div>
+    <div class="editor-actions"><button id="defaultMap">Default map</button><button id="clearMap">Clear walls</button><button id="doneMap" class="editor-done">Done & restart stage</button></div>
+  </div>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
