@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Marble Race 2D</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app">
+  <header class="topbar">
+    <div class="brand"><span class="logo">●</span><div><b>Marble Race</b><small>2D</small></div></div>
+    <div class="top-actions">
+      <button id="raceBtn" class="primary">▶ Race</button>
+      <button id="editBtn">✎ Edit map</button>
+      <button id="resetBtn">↺ Reset</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="race-layout">
+      <aside class="panel racers-panel">
+        <div class="panel-title"><span>Racers</span><span id="slotCount">15/15</span></div>
+        <div id="racerList" class="racer-list"></div>
+        <button id="addRacerBtn" class="ghost full">＋ Add racer</button>
+      </aside>
+
+      <section class="stage-wrap">
+        <div class="stage-toolbar">
+          <span id="status">Ready</span>
+          <div class="toolbar-right">
+            <button id="soundBtn" title="Sound">🔊</button>
+            <button id="saveBtn" title="Save">💾 Save</button>
+            <button id="loadBtn" title="Load">📂 Load</button>
+          </div>
+        </div>
+        <div class="canvas-shell">
+          <canvas id="game" width="900" height="1200"></canvas>
+          <div id="countdown" class="countdown hidden"></div>
+          <div id="winner" class="winner hidden">
+            <div class="trophy">🏆</div>
+            <div id="winnerName"></div>
+            <button id="againBtn" class="primary">Race again</button>
+          </div>
+        </div>
+      </section>
+
+      <aside class="panel settings-panel">
+        <div class="panel-title">Race settings</div>
+        <label>Gravity <input id="gravityInput" type="range" min="0.1" max="2.5" step="0.05" value="1"></label>
+        <div class="value" id="gravityValue">1.00</div>
+        <label>Marble size <input id="sizeInput" type="range" min="12" max="28" value="19"></label>
+        <div class="value" id="sizeValue">19 px</div>
+        <label>Race speed <input id="speedInput" type="range" min="0.5" max="2" step="0.1" value="1"></label>
+        <div class="value" id="speedValue">1.0×</div>
+        <div class="divider"></div>
+        <button id="shuffleBtn" class="ghost full">🔀 Shuffle racers</button>
+        <button id="clearBtn" class="danger full">Clear race</button>
+        <p class="hint">Names, pictures and map changes are saved in this browser.</p>
+      </aside>
+    </section>
+  </main>
+</div>
+
+<input id="imagePicker" type="file" accept="image/*" hidden>
+<input id="loadPicker" type="file" accept=".json,application/json" hidden>
+
+<dialog id="racerDialog">
+  <form method="dialog" class="dialog">
+    <h2>Edit racer</h2>
+    <div class="avatar-row">
+      <button type="button" id="avatarButton" class="avatar large">+</button>
+      <div><b id="editRacerTitle">Racer</b><p>Choose an image and name.</p></div>
+    </div>
+    <label>Name<input id="nameInput" maxlength="24" placeholder="Racer name"></label>
+    <div class="dialog-actions"><button value="cancel">Cancel</button><button id="saveRacerBtn" value="default" class="primary">Save</button></div>
+  </form>
+</dialog>
+
+<div id="editorPanel" class="editor-panel hidden">
+  <div class="editor-head"><b>Map editor</b><span>Drag to draw walls · click a wall to delete</span><button id="closeEditor">Done</button></div>
+  <div class="editor-tools">
+    <button id="clearMapBtn">Clear walls</button>
+    <button id="defaultMapBtn">Default map</button>
+    <button id="saveMapBtn" class="primary">Save map</button>
+    <span id="editorHelp">Walls are collision boundaries. The finish is the green line.</span>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
