@@ -130,7 +130,7 @@ function paintMarbles(){
 }
 function renderContestants(){
  const list=$('#contestantsList'),done=new Set(finishers);
- list.innerHTML=participants.map((r,i)=>{const idx=data.racers.indexOf(r),isDone=done.has(r.id);return '<div class="contestant '+(isDone?'done':'')+'"><div class="contestant-avatar">'+(r.image?'<img src="'+r.image+'">':'<span style="--marble-color:'+r.color+'"></span>')+'</div><div class="contestant-text"><b>'+escapeHtml(r.name)+'</b><small>Slot '+(idx+1)+'</small></div><span class="contestant-status">'+(isDone?'ADVANCED':'RACING')+'</span></div>'}).join('');
+ list.innerHTML=participants.map((r,i)=>{const idx=data.racers.indexOf(r),isDone=done.has(r);return '<div class="contestant '+(isDone?'done':'')+'"><div class="contestant-avatar">'+(r.image?'<img src="'+r.image+'">':'<span style="--marble-color:'+r.color+'"></span>')+'</div><div class="contestant-text"><b>'+escapeHtml(r.name)+'</b><small>Slot '+(idx+1)+'</small></div><span class="contestant-status">'+(isDone?'ADVANCED':'RACING')+'</span></div>'}).join('');
  const keep=KEEP[stageIndex];$('#remainingCount').textContent=participants.length+' racing';$('#advanceCount').textContent=finishers.length+' / '+keep;
 }
 function updateTimer(){
