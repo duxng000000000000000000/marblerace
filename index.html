@@ -89,5 +89,10 @@
 
 <script src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
 <script src="app.js"></script>
-</body>
+<div id="newMarbleApp">
+<section id="newSetup" class="new-screen"><div class="new-top"><b>MARBLE RACE</b><button id="newReset">Reset</button></div><div class="new-inner"><h1>Choose your 15 racers</h1><p>Ảnh + tên của từng marble. 5 hàng × 3 marble.</p><div id="newGrid"></div><button id="newStart" class="new-start">START RACE ▶</button></div></section>
+<section id="newRace" class="new-screen new-hidden"><div class="new-top"><button id="newBack">←</button><div><b id="newRound">Round 1</b><small id="newCount">3 racers</small></div><div><button id="newMapBtn">✎ Map</button><button id="newRestart">↻</button></div></div><div class="new-race-wrap"><div class="new-stage"><div class="new-stage-head"><span><b id="newStage">Stage 1</b><small>🔵 BLUE = đi tiếp　🔴 RED = quay lại đỉnh</small></span></div><div class="new-canvas-wrap"><canvas id="newGame" width="900" height="1200"></canvas><div id="newCountdown" class="new-overlay new-hidden"></div><div id="newMessage" class="new-message new-hidden"></div></div></div><div id="newPlayers"></div></div></section>
+<section id="newWinner" class="new-screen new-hidden"><div class="new-winner"><div>🏆</div><small>MARBLE RACE CHAMPION</small><h1 id="newWinnerName"></h1><button id="newAgain" class="new-start">RACE AGAIN ▶</button></div></section>
+<input id="newPicker" type="file" accept="image/*" hidden>
+<div id="newEditor" class="new-hidden"><div class="new-editor"><b>MAP EDITOR</b><small>Kéo để thêm tường · chạm tường để xóa</small><button id="newDefault">Default</button><button id="newClear">Clear</button><button id="newDone">Done</button></div></div></div></body>
 </html>
