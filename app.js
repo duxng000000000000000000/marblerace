@@ -129,7 +129,7 @@ function paintMarbles(){
  }
 }
 function renderContestants(){
- const list=$('#contestantsList'),done=new Set(finishers.map(x=>x.id));
+ const list=$('#contestantsList'),done=new Set(finishers);
  list.innerHTML=participants.map((r,i)=>{const idx=data.racers.indexOf(r),isDone=done.has(r.id);return '<div class="contestant '+(isDone?'done':'')+'"><div class="contestant-avatar">'+(r.image?'<img src="'+r.image+'">':'<span style="--marble-color:'+r.color+'"></span>')+'</div><div class="contestant-text"><b>'+escapeHtml(r.name)+'</b><small>Slot '+(idx+1)+'</small></div><span class="contestant-status">'+(isDone?'ADVANCED':'RACING')+'</span></div>'}).join('');
  const keep=KEEP[stageIndex];$('#remainingCount').textContent=participants.length+' racing';$('#advanceCount').textContent=finishers.length+' / '+keep;
 }
@@ -159,9 +159,9 @@ function endStage(ranked){
  setTimeout(()=>{stageIndex++;startStage()},2100);
 }
 function resolveTimeout(){
- const finishingIds=new Set(finishers.map(r=>r.id));
+ const finishingIds=new Set(finishers);
  const notFinished=bodies.filter(b=>!b.plugin.finished).sort((a,b)=>b.position.y-a.position.y).map(b=>b.plugin.racer);
- const ranked=[...finishers,...notFinished.filter(r=>!finishingIds.has(r.id))];
+ const ranked=[...finishers,...notFinished.filter(r=>!finishingIds.has(r))];
  endStage(ranked);
 }
 function checkRace(){
