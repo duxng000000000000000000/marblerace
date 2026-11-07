@@ -22,7 +22,7 @@ let lastFrame=0,raceStart=0,stageTimer=0,stageFinishing=false,stageTimeout=52000
 function safeLoad(){
  try{
   const raw=localStorage.getItem(STORE)||localStorage.getItem('marbleRace2D.final')||localStorage.getItem('marbleRace2D.v4');
-  if(raw){const s=JSON.parse(raw);if(Array.isArray(s.racers))data.racers=s.racers.slice(0,15).map((r,i)=>({name:r.name||'Racer '+(i+1),image:r.image||null,color:r.color||COLORS[i]}));if(s.savedWalls)data.savedWalls=s.savedWalls;if(s.map?.walls)data.savedWalls[1]=s.map.walls;}
+  if(raw){const s=JSON.parse(raw);if(Array.isArray(s.racers))data.racers=s.racers.slice(0,15).map((r,i)=>({name:r.name||'Racer '+(i+1),image:r.image||null,color:r.color||COLORS[i]}));if(s.savedWalls){data.savedWalls=s.savedWalls;for(const k of Object.keys(data.savedWalls)){data.savedWalls[k]=(data.savedWalls[k]||[]).map(w=>Array.isArray(w)?w:[w.x1,w.y1,w.x2,w.y2,w.w||24])}}if(s.map?.walls)data.savedWalls[1]=s.map.walls.map(w=>Array.isArray(w)?w:[w.x1,w.y1,w.x2,w.y2,w.w||24]);if(s.walls)data.savedWalls[1]=s.walls.map(w=>Array.isArray(w)?w:[w.x1,w.y1,w.x2,w.y2,w.w||24]);}
  }catch(e){console.warn('Could not load saved racers',e)}
  while(data.racers.length<15){const i=data.racers.length;data.racers.push({name:'Racer '+(i+1),image:null,color:COLORS[i]})}
 }
