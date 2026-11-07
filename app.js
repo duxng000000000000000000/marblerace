@@ -104,7 +104,7 @@ function getImage(src){if(!imgCache.has(src)){const im=new Image();im.src=src;im
 
 function rebuild(){
   if(engine){Runner.stop(runner);Composite.clear(engine.world,false,true);Engine.clear(engine);}
-  engine=Engine.create();engine.gravity.y=state.gravity;
+  engine=Engine.create();engine.gravity.y=state.gravity;engine.timing.timeScale=state.speed;
   runner=Runner.create(); bodies=[];
   // spawn row
   const xs=[210,245,280,315,350,385,420,455,490,525,560,595,630,665,700];
@@ -154,11 +154,11 @@ canvas.addEventListener('pointerdown',e=>{
 });
 canvas.addEventListener('pointerup',e=>{
   if(!editor)return;const p=canvasPoint(e);
-  if(drawStart && Math.hypot(p.x-drawStart.x,p.y-drawStart.y)>20)state.map.walls.push({x1:drawStart.x,y1:drawStart.y,x2:p.x,y2:p.y,w:70});
+  if(drawStart && Math.hypot(p.x-drawStart.x,p.y-drawStart.y)>20){state.map.walls.push({x1:drawStart.x,y1:drawStart.y,x2:p.x,y2:p.y,w:70});justAdded=true;}
   drawStart=null;editingWall=null;saveState();
 });
 canvas.addEventListener('click',e=>{
-  if(!editor)return;const p=canvasPoint(e);
+  if(!editor || justAdded){justAdded=false;return;}const p=canvasPoint(e);
   for(let i=state.map.walls.length-1;i>=0;i--)if(distToSeg(p,state.map.walls[i])<9){state.map.walls.splice(i,1);saveState();break}
 });
 function distToSeg(p,s){const vx=s.x2-s.x1,vy=s.y2-s.y1,wx=p.x-s.x1,wy=p.y-s.y1,c1=wx*vx+wy*vy,c2=vx*vx+vy*vy,t=Math.max(0,Math.min(1,c1/(c2||1))),x=s.x1+t*vx,y=s.y1+t*vy;return Math.hypot(p.x-x,p.y-y)}
